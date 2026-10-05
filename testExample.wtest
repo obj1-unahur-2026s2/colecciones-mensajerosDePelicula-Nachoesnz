@@ -1,9 +1,59 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+describe "Tests mensajeros"{
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+
+  test "Que roberto (90kg) puede llevar un paquete que está pago en un camión que tiene un acoplado."{
+    roberto.cambiarACamion()
+    camion.cambiarCantidadAcoplados(1)
+    assert.equals(true, puenteDeBrooklyn.puedePasar(roberto))
+    assert.equals(false, laMatrix.puedePasar(roberto))
+  }
+
+  test "Que neo con crédito no puede llevar un paquete que no está pago a la matrix."{
+    paquete.cambiarEstadoPaquete()
+    assert.equals(false, laMatrix.puedePasar(neo))
+  }
+
+  test "Contratar a un mensajero"{
+    empresaMensajeria.contratarMensajero(neo)
+    assert.equals(true, empresaMensajeria.empleados().contains(neo))
+  }
+  test "Despedir a un Mensajero"{
+    empresaMensajeria.contratarMensajero(neo)
+    empresaMensajeria.despedirMensajero(neo)
+    assert.equals(false, empresaMensajeria.empleados().contains(neo))
+  } 
+
+  test "Despedir a todos los mensajeros"{
+    empresaMensajeria.contratarMensajero(neo)
+    empresaMensajeria.contratarMensajero(roberto)
+    empresaMensajeria.contratarMensajero(chuckNorris)
+    empresaMensajeria.despedirATodosLosMensajeros()
+    assert.equals(true, empresaMensajeria.empleados().isEmpty())
+  }
+
+  test "Mensajeria grande (contratando 1 empleado)"{
+    empresaMensajeria.contratarMensajero(neo)
+    assert.equals(false, empresaMensajeria.mensajeriaGrande())
+  }
+
+
+  test "Mensajeria grande (contratando 3 empleado)"{
+    empresaMensajeria.contratarMensajero(neo)
+    empresaMensajeria.contratarMensajero(roberto)
+    empresaMensajeria.contratarMensajero(chuckNorris)
+    assert.equals(true, empresaMensajeria.mensajeriaGrande())
+  }
+
+  test "Primer empleado eficiente a La Matrix"{
+    empresaMensajeria.contratarMensajero(neo)
+    assert.equals(true, empresaMensajeria.primerEmpleadoEficiente(laMatrix))
+  }
+
+    test "Primer empleado eficiente a puente de Brooklyn"{
+    empresaMensajeria.contratarMensajero(neo)
+    assert.equals(true, empresaMensajeria.primerEmpleadoEficiente(puenteDeBrooklyn))
   }
 
 }
